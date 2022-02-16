@@ -154,6 +154,7 @@ import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
 import "~/assets/css/web.css";
 import cookie from 'js-cookie'
+import loginApi from '@/api/login'
 
 export default {
   data(){
@@ -197,10 +198,28 @@ export default {
       if(userStr){
         this.loginInfo=JSON.parse(userStr)
       }
-      
+    },
+
+    //微信登录显示的方法
+    wxLogin(){
+      //把token值放入cookie
+      cookie.set('guli_token',this.token,{domain:'localhost'})
+      cookie.set('guli_ucenter','',{domain:'localhost'})
+      //调用接口，根据token值获取用户信息
+      loginApi.getLoginUserInfo().then(
+        response=>{
+          this.loginInfo=response.data.data.userInfo
+          cookie.set('guli_ucenter',JSON.stringify(this.loginInfo),{domain:'localhost'})
+        }
+      )
     }
   },
   created(){
+    //获取路径中的token值
+    this.token=this.$route.query.token
+    if(this.token){ //判断路径中是否有token值
+      this.wxLogin()
+    }
     this.showInfo()
   }
 };

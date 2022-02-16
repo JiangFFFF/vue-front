@@ -12,7 +12,7 @@ export default({
     //注册
     registerMember(formItem){
         return request({
-            url:`/educenter/member/regist`,
+            url:`/ucenter/member/regist`,
             method:'post',
             data:formItem
         })

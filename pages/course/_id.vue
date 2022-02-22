@@ -37,10 +37,13 @@
                 <a class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
-            <section class="c-attr-mt">
-              <a @click="createOrders"  href="#" title="立即购买" class="comm-btn c-btn-3"
-                >立即购买</a
-              >
+            <section v-if="isBuy===true || Number(courseWebVo.price)===0" class="c-attr-mt">
+              <a href="#" title="立即观看" class="comm-btn c-btn-3"
+                >立即观看</a>
+            </section>
+            <section v-if="isBuy===false && Number(courseWebVo.price)>0" class="c-attr-mt">
+              <a  @click="createOrders"  href="#" title="立即购买" class="comm-btn c-btn-3"
+                >立即购买</a>
             </section>
           </section>
         </aside>
@@ -314,6 +317,7 @@ export default {
       courseId:'',
       courseWebVo:{},
       chapterVideoList:[],
+      isBuy:false,
       comment:{
         content: "",
         courseId: "",
@@ -333,6 +337,9 @@ export default {
         response=>{
           this.courseWebVo=response.data.data.courseWebVo
           this.chapterVideoList=response.data.data.chapterVideoList
+          this.isBuy=response.data.data.isBuy
+          console.log("!!",this.isBuy)
+          
         }
       )
     },

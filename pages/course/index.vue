@@ -89,7 +89,7 @@
                       <a
                         :href="'/course/'+item.id"
                         title="开始学习"
-                        class="comm-btn c- btn-1"
+                        class="comm-btn c-btn-1"
                         >开始学习</a
                       >
                     </div>
